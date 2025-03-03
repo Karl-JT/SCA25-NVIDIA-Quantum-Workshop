@@ -1,0 +1,162 @@
+/// @brief Grover's algorithm using CUDA-Q C++
+/// Process: using a kernel functor and 2 registers of qubits
+
+#include "grovers_cudaq.h"
+
+// The goal is to add the appropriate operators
+
+/// Here we go defining a kernel to operate on the kernel
+struct kernel
+{
+    auto operator()(const int n, const int namp) __qpu__
+    {
+        auto qvector = cudaq::qvector(n - 1);
+        auto qfinal = cudaq::qubit();
+
+        // superposition
+        cudaq::h(qvector);
+        cudaq::h(qfinal);
+        for (int i = 0; i < namp; i++)
+        {
+            // Mark
+            cudaq::z<cudaq::ctrl>(qvector, qfinal);
+
+            // Diffusion
+            cudaq::h(qvector);
+            cudaq::h(qfinal);
+            cudaq::x(qvector);
+            cudaq::x(qfinal);
+            cudaq::z<cudaq::ctrl>(qvector, qfinal);
+            cudaq::x(qvector);
+            cudaq::x(qfinal);
+            cudaq::h(qvector);
+            cudaq::h(qfinal);
+        }
+        cudaq::mz(qvector);
+        cudaq::mz(qfinal);
+    }
+};
+
+// ideally we would initialize 
+// random numbers on the device
+__global__ void setup_kernel(curandState *state)
+{
+    int id = threadIdx.x + blockIdx.x * blockDim.x;
+    //Each thread gets same seed, a different sequence number, no offset
+    curand_init(1234, id, 0, &state[id]);
+}
+// however, we cannot call curand_* in the cudaq __qpu__ interface
+
+// another possibility is to define 
+// custom operators 
+// here's an example where rotate before applying hadamard  
+CUDAQ_REGISTER_OPERATION(custom_h, 1, 0,
+                        {M_SQRT1_2*(cos(0.05*M_PI)+sin(0.05*M_PI)), 
+                        M_SQRT1_2*(cos(0.05*M_PI)-sin(0.05*M_PI)), 
+                        M_SQRT1_2*(cos(0.05*M_PI)-sin(0.05*M_PI)), 
+                        -M_SQRT1_2*(cos(0.05*M_PI)+sin(0.05*M_PI))})
+
+struct noisy_kernel
+{
+    auto operator()(
+        const int n, 
+        const int namp, 
+        const std::vector<float> noise_scatch_space
+    ) __qpu__ 
+    {
+        auto qvector = cudaq::qvector(n - 1);
+        auto qfinal = cudaq::qubit();
+        // challenging adding noise
+        // as cudaq has abstracted away access to device
+        // memory 
+        // cuQuantum does offer a different approach 
+        // but for the moment, we will use a 
+        // stratch space of random numbers 
+        // that has the appropriate length 
+        // consider adding rotational noise 
+
+        // superposition
+        // prior, we can just call the h with the entire qvector 
+        // but here let's try adding noise, gate by gate!
+        int offset = 0;
+        for (int i=0; i<n-1;i++) {
+            cudaq::h(qvector[i]);
+            if (noise_scratch_space[i+offset]>0.5) {
+                cudaq::ry(std::numbers::pi*2.0*noise_scratch_space[i+offset+n], qvector[i])
+            }
+        }
+        cudaq::h(qfinal);
+        if (noise_scratch_space[n+offset]>0.5) {
+            cudaq::ry(std::numbers::pi*2.0*noise_scratch_space[offset+2*n], qfinal)
+        }
+
+        for (int i = 0; i < namp; i++)
+        {
+            // Mark
+            cudaq::z<cudaq::ctrl>(qvector, qfinal);
+
+            // Diffusion
+            cudaq::h(qvector);
+            cudaq::h(qfinal);
+            cudaq::x(qvector);
+            cudaq::x(qfinal);
+            cudaq::z<cudaq::ctrl>(qvector, qfinal);
+            cudaq::x(qvector);
+            cudaq::x(qfinal);
+            cudaq::h(qvector);
+            cudaq::h(qfinal);
+        }
+        // measurement 
+        cudaq::mz(qvector);
+        cudaq::mz(qfinal);
+
+    }
+};
+
+/// @brief Run the quantum circuit
+/// @param argc 
+/// @param argv 
+/// @return 
+int main(int argc, char **argv)
+{
+    auto opt = GetArgs(argc, argv);
+
+    Log() <<" Running Grovers"<<std::endl;
+    LogParallelAPI();
+    LogBinding();
+    LogSystemMem();
+    
+    Log()<<"Grovers run with :"
+        <<" num_qubits = "<<opt.num_qubits
+        <<" num_amplifaction = "<<opt.num_amplification 
+        <<" num_shots = "<< opt.num_shots
+        <<" with timings and usage averaged over "<<opt.num_iterations<<std::endl;
+
+    // get some timers
+    auto timer = NewTimer();
+    auto sampler = NewComputeSampler(0.01);
+    // Timing just the sample execution.
+    for (auto i = 0; i<opt.num_iterations; i++) 
+    {
+        auto result = cudaq::sample(opt.num_shots, kernel{}, opt.num_qubits, opt.num_amplification);
+    }
+    LogTimeTaken(timer);
+#ifdef _GPU 
+    LogTimeTakenOnDevice(timer);
+#endif
+    LogCPUUsage(sampler);
+#ifdef _GPU
+    LogGPUStatistics(sampler);
+#endif
+    
+    timer = NewTimer();
+    sampler = NewComputeSampler(0.01);
+
+    // Timing just the sample execution.
+    for (auto i = 0; i<opt.num_iterations; i++) 
+    {
+        auto result = cudaq::sample(opt.num_shots, kernel{}, opt.num_qubits, opt.num_amplification);
+    }
+
+    return 0;
+}

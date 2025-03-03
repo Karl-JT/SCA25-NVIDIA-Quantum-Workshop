@@ -1,0 +1,9 @@
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+Pawsey/grovers/bin/
+Pawsey/profile_util/build
+Pawsey/profile_util/lib
+Pawsey/figures/.DS_Store
+Pawsey/output/*txt
+
