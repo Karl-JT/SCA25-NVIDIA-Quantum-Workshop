@@ -1,0 +1,23 @@
+[project]
+name = "sca25-nvidia-quantum-workshop"
+version = "0.1.0"
+description = "Tutorial materials for the NVIDIA Quantum Workshop"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "plotly",
+    "scipy",
+    "bloqade",
+    "bloqade-analog",
+    "quera_ahs_utils",
+    "pytket",
+    "cudaq"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.3.4",
+]
+
