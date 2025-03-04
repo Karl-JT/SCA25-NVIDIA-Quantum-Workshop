@@ -10,8 +10,9 @@ dependencies = [
     "plotly",
     "scipy",
     "bloqade",
+    "bloqade-analog",
     "quera_ahs_utils",
-    "pytket"
+    "pytket",
     "cudaq"
 ]
 
