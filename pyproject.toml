@@ -10,7 +10,9 @@ dependencies = [
     "plotly",
     "scipy",
     "bloqade",
-    "quera_ahs_utils"
+    "quera_ahs_utils",
+    "pytket"
+    "cudaq"
 ]
 
 [project.optional-dependencies]
