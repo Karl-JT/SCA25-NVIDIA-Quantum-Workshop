@@ -92,7 +92,6 @@ docs/_build/
 # doc slides
 docs/slides/**/**.pdf
 docs/slides/build/**/**.png
-**/**/**.pptx
 
 # mkdocs
 site/
@@ -190,7 +189,6 @@ cython_debug/
 !.vscode/settings.json
 .pdm-python
 main.py
-*.json
 .ruff_cache
 .python-version
 !package.json
