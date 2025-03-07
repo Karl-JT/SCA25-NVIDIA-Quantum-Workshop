@@ -92,7 +92,6 @@ docs/_build/
 # doc slides
 docs/slides/**/**.pdf
 docs/slides/build/**/**.png
-**/**/**.pptx
 
 # mkdocs
 site/
