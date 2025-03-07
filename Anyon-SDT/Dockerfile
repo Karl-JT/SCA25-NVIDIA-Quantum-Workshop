@@ -30,5 +30,5 @@ COPY ./README.md /workspace/
 
 # Install Python packages
 RUN pip install --upgrade pip && \
-    pip install jupyterlab 
+    pip install jupyterlab cudaq
 RUN pip install -r ./requirements.txt
