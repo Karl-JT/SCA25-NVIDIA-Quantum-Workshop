@@ -6,7 +6,7 @@ To access the GPU server at Singtel Re:AI, please follow the guidlines in VPN in
 The usernames for VPN access is nv-user1, nv-user2, ..., nv-user24
 PW: $nvidia#demo!
 
-#SSH connections
+# SSH connections
 Please ssh and portforwarding to the following server
 
 Server $~~~~~~~~~~~~~~~~$ IP $~~~~~~~~~~~~~~~~~~$ username   
