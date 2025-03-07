@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/cuda-dl-base:24.10-cuda12.6-devel-ubuntu22.04
+FROM nvcr.io/nvidia/cuda:12.8.0-devel-ubuntu22.04
 
 # Set environment variables to optimize Python in Docker
 ENV PYTHONDONTWRITEBYTECODE=1 \
