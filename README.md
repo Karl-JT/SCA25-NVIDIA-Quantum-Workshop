@@ -27,3 +27,9 @@ ssh -L localhost:8810:localhost:8810 nv-user10!10.0.0.11
 
 For windows users, you may install MobaXterm or putty for the access. 
 [link to MobaXterm documentations](https://mobaxterm.mobatek.net/documentation.html#2_1_5)
+
+
+# Launch docker container and jupyterlab
+This repository will be made available at /svr/ directory
+
+Follow instructions of each lab and launch respective docker container 
