@@ -22,7 +22,7 @@ ssh -L localhost:<port>:localhost:<port> username@10.0.0.10
 e.g. for nv-user10, you will be assigned to NV-H100-02, IP 10.0.0.11, with port number 8810 (80+usrid)
 The password for login is $nvidia#demo!
 ```
-ssh -L localhost:8810:localhost:8810 nv-user10!10.0.0.11
+ssh -L localhost:8810:localhost:8810 nv-user10@10.0.0.11
 ```
 
 For windows users, you may install MobaXterm or putty for the access. 
