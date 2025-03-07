@@ -27,16 +27,20 @@ def Q_to_Ising(Q, offset=0):
             h[(i,)] -= Q[i, j] / 4
             h[(j,)] -= Q[i, j] / 4
             offset += Q[i, j] / 4
-
-    return h, J, offset
+    coeff_max = max(
+        max(abs(v) for v in h.values()),
+        max(abs(v) for v in J.values()),
+    )
+        
+    return h, J, offset, coeff_max
 
 
 def create_cost_Hamiltonian(Q):
     """
     Based on the calculated Ising coefficients, constructs the cost Hamiltonian 
     """
-    h, J, offset = Q_to_Ising(Q)
-    coeff_max = max(abs(k) for k in list(h.values()) + list(J.values()))
+    h, J, offset, coeff_max = Q_to_Ising(Q)
+    offset /= coeff_max
 
     operator_terms = []
     pauli_words = []
@@ -62,20 +66,22 @@ def create_cost_Hamiltonian(Q):
 
     cost_operator = sum(operator_terms)
 
-    return cost_operator, pauli_coeffs, pauli_words, coeff_max, offset
+    return cost_operator, pauli_coeffs, pauli_words, offset
 
 
 def create_mixer_Hamiltonian(num_qubits):
     """
-    Constructs custom (a, b)-tunable mixer Hamiltonian 
+    Constructs a mixer Hamiltonian 
     """
     operator_terms = []
     pauli_words = []
 
     for i in range(num_qubits):
-        operator_terms.append((-1, spin.x(i)))
+        operator_terms.append(-1 * spin.x(i))
 
         x_word = ['I'] * num_qubits
         x_word[i] = 'X'
         pauli_words.append(''.join(x_word))
-    return operator_terms, pauli_words
+    mixer_operator = sum(operator_terms)
+
+    return mixer_operator, pauli_words

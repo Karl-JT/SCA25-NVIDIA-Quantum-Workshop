@@ -16,10 +16,13 @@ from src_cudaq.circuits import (
 )
 
 from src_cudaq.optimizer import (
-    run_qaoa_vqe
+    run_qaoa_cudaq_opt,
+    run_qaoa_opt,
+    run_qaoa_glob_opt
 )
 
 import numpy as np
 import matplotlib.pyplot as plt
 import cudaq
+from cudaq import spin
 from collections import defaultdict

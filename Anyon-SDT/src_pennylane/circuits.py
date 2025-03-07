@@ -1,59 +1,47 @@
 """
 functions:
     qaoa_layer
-    qaoa_layer_custom_mixer
+    qaoa_layer_custom
     circuit
-    circuit_custom_mixer
+    circuit_custom
     cost_function
-    cost_function_custom_mixer
+    cost_function_custom
     prob_populations
-    prob_populations_custom_mixer
+    prob_populations_custom
     calculate_cost
 """
 
 import pennylane as qml
-import numpy as np
+from pennylane import numpy as np
+from pennylane import qaoa as qaoa
+from src_pennylane.qaoa_converter import create_mixer_Hamiltonian
 
 
-def qaoa_layer(gamma, beta, cost_hamiltonian, mixer_hamiltonian):
-    qml.evolve(cost_hamiltonian, gamma)
-    qml.evolve(mixer_hamiltonian, beta)
-    
+# ----- QAOA Layers -----
 
-def circuit(params, depth, cost_hamiltonian, mixer_hamiltonian, wires):
+def qaoa_layer(gamma, beta, H_C, mixer_hamiltonian):
+    qaoa.cost_layer(gamma, H_C)
+    qaoa.mixer_layer(beta, mixer_hamiltonian)
+
+
+def qaoa_layer_custom(gamma, beta, a, b, H_C, num_qubits):
+    qaoa.cost_layer(gamma, H_C)
+    mixer_hamiltonian = create_mixer_Hamiltonian(num_qubits, a, b)
+    qaoa.mixer_layer(beta, mixer_hamiltonian)
+
+# ----- Circuits -----
+
+def circuit(params, depth, H_C, mixer_hamiltonian, wires):
     for w in range(wires):
         qml.Hadamard(w)
     for d in range(depth):
         gamma = params[0][d]
         beta = params[1][d]
-        qaoa_layer(gamma, beta, cost_hamiltonian, mixer_hamiltonian)
+        qaoa_layer(gamma, beta, H_C, mixer_hamiltonian)
 
 
-def cost_function(params, depth, cost_hamiltonian, mixer_hamiltonian, wires, device, normalized=True):
-    @qml.qnode(device)
-    def qaoa_circuit():
-        circuit(params, depth, cost_hamiltonian, mixer_hamiltonian, wires)
-        return qml.expval(cost_hamiltonian if normalized else cost_hamiltonian)
-
-    return qaoa_circuit()
-
-
-def prob_populations(params, depth, cost_hamiltonian, mixer_hamiltonian, wires, device):
-    @qml.qnode(device)
-    def qaoa_circuit():
-        circuit(params, depth, cost_hamiltonian, mixer_hamiltonian, wires)
-        return qml.probs(wires=range(wires))
-
-    return qaoa_circuit()
-
-
-def qaoa_layer_cm(gamma, beta, a, b, cost_hamiltonian, wires):
-    qml.evolve(cost_hamiltonian, gamma)
-    mixer_hamiltonian = cm_mixer_hamiltonian_layer(a, b, wires)
-    qml.evolve(mixer_hamiltonian, beta)
-
-
-def circuit_cm(params, depth, cost_hamiltonian, wires):
+def circuit_custom(params, depth, H_C, wires):
+    num_qubits = wires
     for w in range(wires):
         qml.Hadamard(w)
     for d in range(depth):
@@ -61,26 +49,43 @@ def circuit_cm(params, depth, cost_hamiltonian, wires):
         beta = params[1][d]
         a = params[2][d]
         b = params[3][d]
-        qaoa_layer_cm(gamma, beta, a, b, cost_hamiltonian, wires)
+        qaoa_layer_custom(gamma, beta, a, b, H_C, num_qubits)
 
+# ----- Cost Functions -----
 
-def cost_function_cm(params, depth, cost_hamiltonian, wires, device, normalized=True):
+def cost_function(params, depth, H_C, cost_hamiltonian, mixer_hamiltonian, wires, device, normalized=True):
     @qml.qnode(device)
     def qaoa_circuit():
-        circuit_cm(params, depth, cost_hamiltonian, wires)
-        return qml.expval(cost_hamiltonian if normalized else cost_hamiltonian)
-
+        circuit(params, depth, H_C, mixer_hamiltonian, wires)
+        return qml.expval(H_C if normalized else cost_hamiltonian)
     return qaoa_circuit()
 
 
-def prob_populations_cm(params, depth, cost_hamiltonian, wires, device):
+def cost_function_custom(params, depth, H_C, cost_hamiltonian, wires, device, normalized=True):
     @qml.qnode(device)
     def qaoa_circuit():
-        circuit_cm(params, depth, cost_hamiltonian, wires)
+        circuit_custom(params, depth, H_C, wires)
+        return qml.expval(H_C if normalized else cost_hamiltonian)
+    return qaoa_circuit()
+
+# ----- Probability Functions -----
+
+def prob_populations(params, depth, H_C, mixer_hamiltonian, wires, device):
+    @qml.qnode(device)
+    def qaoa_circuit():
+        circuit(params, depth, H_C, mixer_hamiltonian, wires)
         return qml.probs(wires=range(wires))
-
     return qaoa_circuit()
 
+
+def prob_populations_custom(params, depth, H_C, wires, device):
+    @qml.qnode(device)
+    def qaoa_circuit():
+        circuit_custom(params, depth, H_C, wires)
+        return qml.probs(wires=range(wires))
+    return qaoa_circuit()
+
+# ----- Cost Evaluation -----
 
 def calculate_cost(spin_config, Q):
     spin_config = np.array(list(spin_config), dtype=int)

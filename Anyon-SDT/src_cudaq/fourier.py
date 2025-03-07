@@ -31,7 +31,7 @@ def fourier_amplitude_init(q):
     Initializes the Fourier amplitudes within desired ranges.
     """
     amps = np.hstack([
-        np.random.uniform(0, np.pi/2, q),   # gamma amplitudes (u_k)
-        np.random.uniform(0, np.pi/2, q)    # beta amplitudes (v_k)
+        np.random.uniform(-np.pi/2, np.pi/2, q),   # gamma amplitudes (u_k)
+        np.random.uniform(-np.pi/2, np.pi/2, q)    # beta amplitudes (v_k)
     ])
     return amps

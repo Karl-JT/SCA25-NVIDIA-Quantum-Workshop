@@ -5,8 +5,8 @@ functions:
     create_mixer_Hamiltonian
 """
 
-import numpy as np
 import pennylane as qml
+from pennylane import numpy as np
 from collections import defaultdict
 
 
@@ -50,14 +50,15 @@ def create_cost_Hamiltonian(Q, converted=0, h=None, J=None, offset=0, oneq_opera
             raise ValueError("Operator lists are required if Q is already converted.")
 
     coeffs = list(h.values()) + list(J.values())
+    coeff_max = max(abs(c) for c in coeffs)
     operators = oneq_operators + twoq_operators
 
-    return qml.Hamiltonian(coeffs, operators), offset
+    return qml.Hamiltonian(coeffs, operators), offset, coeff_max
 
 
 def create_mixer_Hamiltonian(num_qubits, a=1.0, b=0.0):
     """
-    Creates a custom mixer Hamiltonian with tunable (a, b) coefficients.
+    Creates a custom mixer Hamiltonian with tunable (a, b) coefficients. It is the typical mixer Hamiltonian by default.
     """
     coefficients = []
     operators = []
