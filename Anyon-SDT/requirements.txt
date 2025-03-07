@@ -1,4 +1,4 @@
-PennyLane version: 0.40.0
-numpy version: 1.26.4
-matplotlib version: 3.9.2
-scipy version: 1.12.0
+PennyLane==0.40.0
+numpy==1.26.4
+matplotlib==3.9.2
+scipy==1.12.0
