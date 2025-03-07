@@ -7,7 +7,7 @@ To access the GPU server at Singtel Re:AI, please follow the guidlines in VPN in
 #SSH connections
 Please ssh and portforwarding to the following server
 
-Server      <space> <space>       IP     <space>      username   
+Server      <space> <space>       IP     $~~~~~~$      username   
 NV-H100-01  <space> <space>   10.0.0.10  <space>     nv-user1, nv-user2, ..., nv-user8  
 NV-H100-02  <space> <space>   10.0.0.11  <space>     nv-user9, nv-user10, ..., nv-user16  
 NV-H100-03  <space> <space>   10.0.0.12  <space>     nv-user17, nv-user18, ..., nv-user24  
