@@ -7,7 +7,7 @@ To access the GPU server at Singtel Re:AI, please follow the guidlines in VPN in
 #SSH connections
 Please ssh and portforwarding to the following server
 
-Server $~~~~~~~~~~~~~$ IP $~~~~~~~~~~~~~~~~~~$ username   
+Server $~~~~~~~~~~~~~~~~$ IP $~~~~~~~~~~~~~~~~~~$ username   
 NV-H100-01 $~~~~~~$ 10.0.0.10 $~~~~~~$ nv-user1, nv-user2, ..., nv-user8  
 NV-H100-02 $~~~~~~$ 10.0.0.11 $~~~~~~$ nv-user9, nv-user10, ..., nv-user16  
 NV-H100-03 $~~~~~~$ 10.0.0.12 $~~~~~~$ nv-user17, nv-user18, ..., nv-user24  
@@ -19,3 +19,4 @@ ssh -L localhost:<port>:localhost:<port> username@10.0.0.10
 ```
 
 For windows users, you may install MobaXterm or putty for the access. 
+[link to MobaXterm documentations](https://mobaxterm.mobatek.net/documentation.html#2_1_5)
