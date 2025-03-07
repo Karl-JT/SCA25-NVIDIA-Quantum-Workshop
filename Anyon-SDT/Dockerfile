@@ -24,6 +24,9 @@ COPY ./src_cudaq/ /workspace/src_cudaq/
 COPY ./QAOA_CudaQ.ipynb /workspace/
 COPY ./src_pennylane/ /workspace/src_pennylane/
 COPY ./QAOA_PennyLane.ipynb /workspace/
+COPY ./requirements.txt /workspace/
+COPY ./anyon-sdt.sh /workspace/
+COPY ./README.md /workspace/
 
 # Install Python packages
 RUN pip install --upgrade pip && \
