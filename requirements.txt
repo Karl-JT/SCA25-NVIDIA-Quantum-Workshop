@@ -1,0 +1,8 @@
+jupyterlab==4.3.5
+matplotlib==3.10.1
+cudaq==0.9.1
+qutip==4.7.6
+qibocal==0.1.1
+qibolab @ git+https://github.com/qiboteam/qibolab.git@anyon_emulator
+qibolab_visualization @ git+https://github.com/qiboteam/qibolab_visualization.git@main
+scipy==1.12.0
