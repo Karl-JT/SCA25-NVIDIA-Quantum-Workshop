@@ -1,1 +1,0 @@
-# HSBC-Anyon Tutorial Material
