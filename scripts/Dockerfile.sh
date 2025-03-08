@@ -11,7 +11,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /workspace
 
 # Copy demo material to workspace
-COPY ./figure/ /workspace/figure/
+COPY ./figures/ /workspace/figure/
 COPY ./grovers/ /workspace/grovers/
 COPY ./output/ /workspace/output/
 COPY ./profile_util/ /workspace/profile_util
