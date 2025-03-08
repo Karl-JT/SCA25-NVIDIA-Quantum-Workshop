@@ -27,7 +27,11 @@ requirements.txt
 README.md
 
 ## Requirements:
-pip install -r requirements.txt
+```
+$ docker build -f Dockerfile -t anyon-sdt .
+$ chmod +x ./anyon-sdt.sh
+$ ./anyon-sdt.sh $PORTNUMBER
+```
 
 ## References
 
