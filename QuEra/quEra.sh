@@ -10,4 +10,4 @@ PORT=$1
 last_two_digits=${PORT: -2}
 device_index=$((10#$last_two_digits % 8))
 
-docker run --gpus '"device='$device_index'"' --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -p $PORT:$PORT --rm quera:latest jupyter-lab --port=$PORT --ip=0.0.0.0 --allow-root
+docker run --gpus '"device='$device_index'"' --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -p $PORT:$PORT --rm quera:latest -c "sudo jupyter-lab --port=$PORT --ip=0.0.0.0 --allow-root"
