@@ -1,0 +1,68 @@
+/// @file grovers_cudaq.h
+/// @brief include file for non-quantum related functions
+
+// lets include the relevant libraries 
+#include <iostream>
+#include <cmath>
+// load cuda
+#include <cudaq.h>
+#include <cudaq/algorithm.h>
+#include <cudaq/spin_op.h>
+#include <cudaq/algorithms/draw.h>
+// load profiling utility
+#include <profile_util.h>
+
+/// @brief Options structure to store information about the quantum circuit
+struct Options 
+{
+    int num_qubits = 10;
+    int num_amplification = 10;
+    int num_shots = 100;
+    int num_iterations = 1; 
+};
+
+void usage()
+{
+    Options opt;
+    std::cout<<"Usage : \n";
+    std::cout<<" -n <num_qubits ["<<opt.num_qubits<<"] >\n";
+    std::cout<<" -a <num_amplification ["<<opt.num_amplification<<"] >\n";
+    std::cout<<" -s <num_shots ["<<opt.num_shots<<"] >\n";
+    std::cout<<" -i <num_iterations ["<<opt.num_iterations<<"] >\n";
+};
+
+Options GetArgs(int argc, char **argv)
+{
+    Options opt;
+    for(;;)
+    {
+        switch(getopt(argc, argv, "n:a:s:i:")) // note the colon (:) to indicate that 'b' has a parameter and is not a switch
+        {
+            case 'n':
+                opt.num_qubits = atoi(optarg);
+                continue;
+            case 'a':
+                opt.num_amplification = atoi(optarg);
+                continue;
+            case 's':
+                opt.num_shots = atoi(optarg);
+                continue;
+            case 'i':
+                opt.num_iterations = atoi(optarg);
+                continue;
+
+            case '?':
+            case 'h':
+            default :
+                usage();
+                break;
+
+            case -1:
+            break;
+        }
+
+        break;
+    }
+    return opt;
+};
+
