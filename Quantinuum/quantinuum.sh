@@ -7,5 +7,5 @@ fi
 
 PORT=$1
 
-docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 --user="cudaq" -p $PORT:$PORT -v ${PWD}:/workspace/ nvcr.io/nvidia/quantum/cuda-quantum:cu12-0.9.1 -c "cd /workspace/ && jupyter-lab --port=$PORT --ip=0.0.0.0 --allow-root"
+docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 --user="cudaq" -p $PORT:$PORT -v ${PWD}:/workspace/ quantinuum:latest -c "cd /workspace/ && jupyter-lab --port=$PORT --ip=0.0.0.0 --allow-root"
 
