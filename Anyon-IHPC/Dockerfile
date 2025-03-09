@@ -23,6 +23,7 @@ WORKDIR /workspace
 COPY ./anyon_2q_CZ/ /workspace/anyon_2q_CZ/
 COPY ./anyon_2q_iSWAP/ /workspace/anyon_2q_iSWAP/
 COPY ./anyon_4q_CZ/ /workspace/anyon_4q_CZ/
+COPY ./demo/ /workspace/demo/
 COPY ./cudaq-qibolab-emulator-demo.ipynb /workspace/
 
 # Install basic Python packages
