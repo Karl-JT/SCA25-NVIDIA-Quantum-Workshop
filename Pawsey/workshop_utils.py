@@ -947,12 +947,15 @@ def CompareResults(profdata : dict, b1 : str, b2 : str, nqubits : List[int] = No
     for q in nqubits:
         d1 = profdata[b1][q][noise]
         d2 = profdata[b2][q][noise]
-        display(Markdown(f'#### For num_qubits = {q}, which has num_gates = {d1['gates']}'))
+        ngates = d1['gates']
+        display(Markdown(f'#### For num_qubits = {q}, which has num_gates = {ngates}'))
         keys = d1['cpu'].keys()
         for k in keys: 
             display(Markdown(f'field : *{k}*'))
-            display(Markdown(f'CPU | {d1['cpu'][k]}, {d2['cpu'][k]}'))
-            display(Markdown(f'GPU | {d1['gpu'][k]}, {d2['gpu'][k]}'))
+            cpuval1, cpuval2 = d1['cpu'][k], d2['cpu'][k]
+            gpuval1, gpuval2 = d1['gpu'][k], d2['gpu'][k]
+            display(Markdown(f'CPU | {cpuval1}, {cpuval2}'))
+            display(Markdown(f'GPU | {gpuval1}, {gpuval2}'))
         
 # lets compare noise to no noise 
 def CompareToNoiseResults(profdata : dict, b1 : str, nqubits : List[int] = None, ideal : str = '0.0') -> None: 
@@ -964,9 +967,13 @@ def CompareToNoiseResults(profdata : dict, b1 : str, nqubits : List[int] = None,
         for n in noises: 
             d1 = profdata[b1][q][ideal]
             d2 = profdata[b1][q][n]
-            display(Markdown(f'num_gates for nose levels [{ideal}, {n}]] = [{d1['gates']}, {d2['gates']}]'))
+            ngates1 = d1['gates']
+            ngates2 = d2['gates']         
+            display(Markdown(f'num_gates for nose levels [{ideal}, {n}]] = [{ngates1}, {ngates2}]'))
             keys = d1['cpu'].keys()
             for k in keys: 
                 display(Markdown(f'field : *{k}*'))
-                display(Markdown(f'CPU | {d1['cpu'][k]}, {d2['cpu'][k]}'))
-                display(Markdown(f'GPU | {d1['gpu'][k]}, {d2['gpu'][k]}'))
+                cpuval1, cpuval2 = d1['cpu'][k], d2['cpu'][k]
+                gpuval1, gpuval2 = d1['gpu'][k], d2['gpu'][k]
+                display(Markdown(f'CPU | {cpuval1}, {cpuval2}'))
+                display(Markdown(f'GPU | {gpuval1}, {gpuval2}'))
