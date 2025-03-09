@@ -21,6 +21,7 @@ WORKDIR /workspace
 
 # Copy workshop materials to workspace
 COPY ./src_cudaq/ /workspace/src_cudaq/
+COPY ./images/ /workspace/images/
 COPY ./QAOA_CudaQ.ipynb /workspace/
 COPY ./src_pennylane/ /workspace/src_pennylane/
 COPY ./QAOA_PennyLane.ipynb /workspace/
