@@ -1,0 +1,3 @@
+# Hands-on material for Amazon Braket tutorial
+
+This directory contains the hands-on labs for the Amazon Braket session in the NVIDIA CUDA-Q tutorial at SCA2025. The material is added to this repository for reference only. During the Braket session, each attendee will get access to a temporary AWS account in which they can follow us along and run the notebooks. The lab materials will be available in these account. Only a web browser is needed, and nothing needs to be installed on the attendees' laptops.  
