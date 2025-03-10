@@ -30,6 +30,6 @@ For windows users, you may install MobaXterm or putty for the access.
 
 
 # Launch docker container and jupyterlab
-This repository will be made available at /svr/ directory
+This repository will be made available at /srv/ directory
 
 Follow instructions of each lab and launch respective docker container 
