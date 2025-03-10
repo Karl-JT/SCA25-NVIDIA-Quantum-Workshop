@@ -4,7 +4,7 @@ CXX=nvq++
 MPIFLAGS=-D_MPI -lmpi
 FLAGS=-std=c++20 -O3 -Wall -Wextra -Wpedantic -fPIC
 PROFILEFLAGS=-I$(shell pwd)/profile_util/include -Wl,-rpath,$(shell pwd)/profile_util/build/src -L$(shell pwd)/profile_util/build/src/ 
-CUDAFLAGS=-D_CUDA -L/opt/nvidia/hpc_sdk/Linux_aarch64/24.5/cuda/12.4/targets/sbsa-linux/lib/ -I/opt/nvidia/hpc_sdk/Linux_aarch64/24.5/cuda/12.4/targets/sbsa-linux/include/ 
+CUDAFLAGS=-D_CUDA -L/opt/nvidia/hpc_sdk/Linux_x86_64/2025/cuda/lib64/ -I/opt/nvidia/hpc_sdk/Linux_x86_64/2025/cuda/include/ 
 LIBS=-lcudart -lprofile_util
 
 

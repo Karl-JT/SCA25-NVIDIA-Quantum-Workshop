@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ -z "$1" ]; then 
-	echo "Usage: $0 <port_number>"
-	exit 1
+if [ -z "$1" ]; then
+        echo "Usage: $0 <port_number>"
+        exit 1
 fi
 
 PORT=$1

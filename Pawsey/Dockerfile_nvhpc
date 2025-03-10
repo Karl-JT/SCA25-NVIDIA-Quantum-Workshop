@@ -1,0 +1,41 @@
+# Start from the NVIDIA HPC SDK base image
+FROM nvcr.io/nvidia/nvhpc:25.1-devel-cuda12.6-ubuntu22.04
+
+# Install essential dependencies including cmake
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    ca-certificates \
+    git \
+    python3 \
+    python3-pip \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip && \
+    pip install jupyterlab
+
+# Download and run the CUDA Quantum installation script
+WORKDIR /tmp
+RUN wget https://github.com/NVIDIA/cuda-quantum/releases/download/0.9.0/install_cuda_quantum_cu12.x86_64
+RUN chmod +x install_cuda_quantum_cu12.x86_64 && yes y | ./install_cuda_quantum_cu12.x86_64
+
+# Set environment variables for CUDA Quantum
+ENV CUDAQ_INSTALL_PREFIX=/usr/local/cudaq
+# Initialize PYTHONPATH if undefined and append CUDA Quantum path
+ENV PATH="${CUDAQ_INSTALL_PREFIX}/bin:${PATH}"
+
+# Create and set working directory
+WORKDIR /workspace
+
+# Copy demo material to workspace
+COPY ./figures/ /workspace/figures/
+COPY ./grovers/ /workspace/grovers/
+COPY ./output/ /workspace/output/
+COPY ./profile_util/ /workspace/profile_util/
+COPY ./Benchmarking_example.ipynb /workspace/
+COPY ./CUDAQ_example.ipynb /workspace/
+COPY ./Makefile /workspace/
+COPY ./example_output.tgz /workspace/
+COPY ./make_profile_util_lib.sh /workspace/
+COPY ./req.txt /workspace/
+COPY ./workshop_utils.py /workspace/
