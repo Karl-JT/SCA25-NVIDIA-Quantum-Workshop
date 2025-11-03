@@ -371,7 +371,7 @@
                         "amplitude": 0.28125,
                         "frequency": 219825000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 4,
                         "type": "qd",
                         "start": 0,
                         "phase": 0
@@ -381,7 +381,7 @@
                         "amplitude": 0.28125,
                         "frequency": 219825000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 4,
                         "type": "qd",
                         "start": 0,
                         "phase": -0.36325165402344944
@@ -395,7 +395,7 @@
                         "amplitude": 0.28125,
                         "frequency": 376675000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 5,
                         "type": "qd",
                         "start": 0,
                         "phase": 0
@@ -405,7 +405,7 @@
                         "amplitude": 0.28125,
                         "frequency": 376675000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 5,
                         "type": "qd",
                         "start": 0,
                         "phase": -0.36325165402344944
@@ -419,7 +419,7 @@
                         "amplitude": 0.28125,
                         "frequency": 284050000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 6,
                         "type": "qd",
                         "start": 0,
                         "phase": 0
@@ -429,7 +429,7 @@
                         "amplitude": 0.28125,
                         "frequency": 284050000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 6,
                         "type": "qd",
                         "start": 0,
                         "phase": -0.36325165402344944
@@ -443,7 +443,7 @@
                         "amplitude": 0.28125,
                         "frequency": 180125000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 7,
                         "type": "qd",
                         "start": 0,
                         "phase": 0
@@ -453,7 +453,7 @@
                         "amplitude": 0.28125,
                         "frequency": 180125000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 7,
                         "type": "qd",
                         "start": 0,
                         "phase": -0.36325165402344944
@@ -467,7 +467,7 @@
                         "amplitude": 0.28125,
                         "frequency": 253500000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 8,
                         "type": "qd",
                         "start": 0,
                         "phase": 0
@@ -477,7 +477,7 @@
                         "amplitude": 0.28125,
                         "frequency": 253500000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 8,
                         "type": "qd",
                         "start": 0,
                         "phase": -0.36325165402344944
@@ -491,7 +491,7 @@
                         "amplitude": 0.28125,
                         "frequency": 410350000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 9,
                         "type": "qd",
                         "start": 0,
                         "phase": 0
@@ -501,7 +501,7 @@
                         "amplitude": 0.28125,
                         "frequency": 410350000,
                         "shape": "Rectangular()",
-                        "qubit": 2,
+                        "qubit": 9,
                         "type": "qd",
                         "start": 0,
                         "phase": -0.36325165402344944
