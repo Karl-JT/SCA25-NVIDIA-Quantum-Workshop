@@ -15,8 +15,6 @@ COPY ./algorithm/ /workspace/algorithm/
 COPY ./results_H1-1E/ /workspace/results_H1-1E/
 COPY ./results_H1-1SC_16_10/ /workspace/results_H1-1SC_16_10/
 COPY ./qpe_cudaq.ipynb /workspace/
-COPY ./qpe_cudaq_iceberg.ipynb /workspace/
-COPY ./qpe_cudaq_iceberg_discard.ipynb /workspace/
 COPY ./requirements.txt /workspace/
 
 
